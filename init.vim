@@ -1,3 +1,4 @@
+" Vim Plug *************************************************/
 call plug#begin()
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -18,10 +19,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'kdheepak/lazygit.nvim'
 Plug 'neoclide/coc.nvim'
 Plug 'jwalton512/vim-blade'
+Plug 'https://github.com/ludovicchabant/vim-gutentags'
 
 call plug#end()
-
-" Plugin Config
+" **********************************************************/
+" Plugin Config *******************************************/
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -33,11 +35,11 @@ let g:airline_powerline_fonts = 1
 
 colorscheme tokyonight-moon
 hi FloatermBorder guibg=black
-
-" Key Maps
+" **********************************************************/
+" Key Maps ************************************************/
 let mapleader = " "
 
-nnoremap <leader>e :NERDTreeToggle<CR>
+" Basic leader Mappings
 nnoremap <leader>s :w<CR>
 nnoremap <leader>sq :wq<CR>
 nnoremap <leader>q :q<CR>
@@ -46,6 +48,9 @@ nnoremap L :bn<CR>
 nnoremap <leader>bd :bd<CR>
 :imap jk <ESC>
 :imap kj <ESC>
+" NERDTree 
+nnoremap <leader>e :NERDTreeToggle<CR>
+" Floaterm
 nnoremap <silent> <leader>tt :FloatermToggle<CR>
 tnoremap <silent> <leader>tt <C-\><C-n>:FloatermToggle<CR>
 nnoremap <silent> <leader>tn :FloatermNew<CR>
@@ -54,18 +59,25 @@ nnoremap <silent> <leader>tb :FloatermPrev<CR>
 tnoremap <silent> <leader>tb <C-\><C-n>:FloatermPrev<CR>
 nnoremap <silent> <leader>tf :FloatermNext<CR>
 tnoremap <silent> <leader>tf <C-\><C-n>:FloatermNext<CR>
+" FZF
 nnoremap <leader>p :Files<CR>
+" LazyGit
 nnoremap <silent> <leader>gg :LazyGit<CR>
+" namespace resolver import namespace <leader>u
 function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
 autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+" COC go to definition
+nnoremap <leader>gt :call CocActionAsync('jumpDefinition')<CR>
+"COC autocomplete select autocomplete <Tab> in ins mode
 inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
 inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 
-"" Vim Sets
+" *************************************************************/
+"" Vim Sets **************************************************/
 :set number
 :set relativenumber
 :set autoindent
@@ -79,4 +91,4 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 :set lazyredraw
 :set termguicolors
 :set guicursor=i:block
-
+" ************************************************************/
