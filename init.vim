@@ -15,6 +15,7 @@ Plug 'https://github.com/nvim-tree/nvim-web-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim'
+Plug 'jwalton512/vim-blade'
 
 call plug#end()
 
