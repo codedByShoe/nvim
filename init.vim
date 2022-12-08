@@ -3,6 +3,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'https://github.com/tpope/vim-commentary'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'https://github.com/universal-ctags/ctags'
@@ -14,6 +15,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'https://github.com/nvim-tree/nvim-web-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'kdheepak/lazygit.nvim'
 Plug 'neoclide/coc.nvim'
 Plug 'jwalton512/vim-blade'
 
@@ -24,7 +26,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='simple'
+let g:airline_theme='base16_spacemacs'
 let NERDTreeShowHidden=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
