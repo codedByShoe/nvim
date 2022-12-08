@@ -41,10 +41,8 @@ nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>s :w<CR>
 nnoremap <leader>sq :wq<CR>
 nnoremap <leader>q :q<CR>
-nnoremap  H gT
-nnoremap L gt
-nnoremap <leader>bn :bn<CR>
-nnoremap <leader>bp :bp<CR>
+nnoremap  H :bp<CR>
+nnoremap L :bn<CR>
 nnoremap <leader>bd :bd<CR>
 :imap jk <ESC>
 :imap kj <ESC>
@@ -57,6 +55,7 @@ tnoremap <silent> <leader>tb <C-\><C-n>:FloatermPrev<CR>
 nnoremap <silent> <leader>tf :FloatermNext<CR>
 tnoremap <silent> <leader>tf <C-\><C-n>:FloatermNext<CR>
 nnoremap <leader>p :Files<CR>
+nnoremap <silent> <leader>gg :LazyGit<CR>
 function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
