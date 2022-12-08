@@ -1,0 +1,10 @@
+{
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false,
+	"codeLens.enable": true,
+	"diagnostic.errorSign": "✘",
+    "diagnostic.warningSign": "⚠️",
+	"diagnostic.infoSign": "ℹ",
+    "diagnostic.hintSign": "➤",
+	"diagnostic.enableHighlightLineNumber": true
+}

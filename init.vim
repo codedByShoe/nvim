@@ -2,8 +2,8 @@ call plug#begin()
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
-Plug 'rafi/awesome-vim-colorschemes'
 Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'https://github.com/universal-ctags/ctags'
 Plug 'ap/vim-css-color'
@@ -26,9 +26,10 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_theme='simple'
 let NERDTreeShowHidden=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
-:colorscheme afterglow
-
+colorscheme tokyonight-moon
 hi FloatermBorder guibg=black
 
 " Key Maps
@@ -60,6 +61,8 @@ function! IPhpInsertUse()
 endfunction
 autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 
 "" Vim Sets
 :set number
@@ -71,3 +74,8 @@ autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 :set softtabstop=4
 :set mouse=a
 :set hidden
+:set signcolumn=yes
+:set lazyredraw
+:set termguicolors
+:set guicursor=i:block
+
