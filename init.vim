@@ -5,6 +5,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/jiangmiao/auto-pairs'
 Plug 'unblevable/quick-scope'
 Plug 'https://github.com/tpope/vim-commentary'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'lewis6991/gitsigns.nvim'
@@ -15,6 +16,8 @@ Plug 'arnaud-lb/vim-php-namespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-surround'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'glepnir/dashboard-nvim'
 Plug 'wakatime/vim-wakatime'
 Plug 'justinmk/vim-sneak'
 Plug 'https://github.com/nvim-tree/nvim-web-devicons'
@@ -23,7 +26,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'xiyaowong/nvim-transparent'
 Plug 'kdheepak/lazygit.nvim'
 Plug 'jwalton512/vim-blade'
-"Plug 'https://github.com/ludovicchabant/vim-gutentags'
+" Plug 'https://github.com/ludovicchabant/vim-gutentags'
 
 call plug#end()
 " **********************************************************/
@@ -39,13 +42,24 @@ colorscheme tokyonight-moon
 let mapleader = " "
 
 " Basic leader Mappings
-:nmap <leader>e <Cmd>CocCommand explorer<CR>
+:nmap <leader>e <Cmd>:NvimTreeToggle<CR>
+" Save Current Buffer
 nnoremap <C-s> :w<CR>
+" Quit Nvim 
 nnoremap <C-q> :q<CR>
+" Cycle buffers
 nnoremap <Tab> :bn<CR>
+" Delete Current Buffer
 nnoremap <leader>c :bd<CR>
+" Quick and convenient exit of insert mode
 :imap jk <ESC>
 :imap kj <ESC>
+" Move lines up and down in insert mode
+inoremap <A-j> <Esc>:move .+1<CR>==gi
+inoremap <A-k> <Esc>:move .-2<CR>==gi
+"Easy way of adding commas and semicolons to end of line
+inoremap ;; <Esc>A;<Esc> 
+inoremap ,, <Esc>A,<Esc> 
 " Floaterm
 nnoremap <silent> <leader>tt :FloatermToggle<CR>
 tnoremap <silent> <leader>tt <C-\><C-n>:FloatermToggle<CR>
@@ -59,6 +73,9 @@ let g:floaterm_wintype = 'split'
 let g:floaterm_height = 0.2
 " FZF
 nnoremap <leader>p :Files<CR>
+nnoremap <leader>f :History<CR>
+" DashBoard
+nnoremap <leader>; :Dashboard<CR>
 " LazyGit
 nnoremap <silent> <leader>g :LazyGit<CR>
 " namespace resolver import namespace <leader>u
@@ -90,9 +107,10 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 :set termguicolors
 :set cursorline
 " ************************************************************/
-" Bufferline Config
-set termguicolors
+" Plugins that require Lua Config*******************************************/
+
 lua << EOF
+-- Bufferline
 require("bufferline").setup({
 options = {
     indicator = {
@@ -103,7 +121,7 @@ options = {
     max_name_length = 25,
     offsets = {
       {
-        filetype = 'coc-explorer',
+        filetype = 'NvimTree',
         text = '  Files',
         highlight = 'StatusLine',
         text_align = 'left',
@@ -171,5 +189,66 @@ options = {
     },
   },
 })
+-- Git Intergration
 require('gitsigns').setup()
+-- Nvim Tree Config
+require('nvim-tree').setup({
+  git = {
+    ignore = false,
+  },
+  renderer = {
+    highlight_opened_files = '1',
+    group_empty = true,
+    icons = {
+      show = {
+        folder_arrow = false,
+      },
+    },
+    indent_markers = {
+      enable = true,
+      -- inline_arrows = false,
+    },
+  },
+})
+
+vim.cmd([[
+  highlight NvimTreeIndentMarker guifg=#30323E
+  augroup NvimTreeHighlights
+    autocmd ColorScheme * highlight NvimTreeIndentMarker guifg=#30323E
+  augroup end
+]])
+-- Dashboard
+local db = require('dashboard')
+
+db.custom_header = {
+'',                                                             
+'',                                                             
+'   ▄   ▄███▄   ████▄     ▄   ▄█ █▀▄▀█',
+'    █  █▀   ▀  █   █      █  ██ █ █ █', 
+'██   █ ██▄▄    █   █ █     █ ██ █ ▄ █', 
+'█ █  █ █▄   ▄▀ ▀████  █    █ ▐█ █   █', 
+'█  █ █ ▀███▀           █  █   ▐    █ ', 
+'█   ██                  █▐        ▀  ', 
+'                        ▐            ',
+'',
+'',
+'',
+}
+
+db.custom_center = {
+  { icon = '  ', desc = 'New file                       ', action = 'enew' },
+  { icon = '  ', shortcut = 'SPC f', desc = 'Find file                 ', action = 'Files' },
+  { icon = '  ', shortcut = 'SPC h', desc = 'Recent files              ', action = 'History' },
+}
+
+db.custom_footer = { '' }
+
+-- indent blankline
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+	show_end_of_line = true,
+	space_char_blankline = " ",
+}
 EOF
