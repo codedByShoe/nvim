@@ -2,9 +2,14 @@
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": false,
 	"codeLens.enable": true,
-	"diagnostic.errorSign": "✘",
-    "diagnostic.warningSign": "⚠️",
-	"diagnostic.infoSign": "ℹ",
-    "diagnostic.hintSign": "➤",
-	"diagnostic.enableHighlightLineNumber": true
+    "diagnostic.errorSign": "",
+	"diagnostic.warningSign": "",
+    "diagnostic.infoSign":"",
+    "diagnostic.hintSign": "",
+	"diagnostic.enableHighlightLineNumber": true,
+	"emmet.includeLanguages": {
+		"vue-html": "html",
+		"php": "html",
+		"blade": "html"
+	}
 }

@@ -30,12 +30,13 @@ Plug 'jwalton512/vim-blade'
 
 call plug#end()
 " **********************************************************/
-" Plugin Config *******************************************/
-
+" Plugin Vimscript Config *********************************/
+" Airline
 let g:airline_theme='base16_spacemacs'
 let g:airline_powerline_fonts = 1
 let g:transparent_enabled = v:true
-
+" IndentLine
+let g:indentLine_fileTypeExclude = ['dashboard']
 colorscheme tokyonight-moon
 " **********************************************************/
 " Key Maps ************************************************/
@@ -51,29 +52,31 @@ nnoremap <C-q> :q<CR>
 nnoremap <Tab> :bn<CR>
 " Delete Current Buffer
 nnoremap <leader>c :bd<CR>
-" Quick and convenient exit of insert mode
-:imap jk <ESC>
-:imap kj <ESC>
+nnoremap <leader>l :noh<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 " Move lines up and down in insert mode
 inoremap <A-j> <Esc>:move .+1<CR>==gi
 inoremap <A-k> <Esc>:move .-2<CR>==gi
 "Easy way of adding commas and semicolons to end of line
 inoremap ;; <Esc>A;<Esc> 
 inoremap ,, <Esc>A,<Esc> 
-" Floaterm
-nnoremap <silent> <leader>tt :FloatermToggle<CR>
-tnoremap <silent> <leader>tt <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <leader>tn :FloatermNew<CR>
-tnoremap <silent> <leader>tn <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <leader>tb :FloatermPrev<CR>
-tnoremap <silent> <leader>tb <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <leader>tf :FloatermNext<CR>
-tnoremap <silent> <leader>tf <C-\><C-n>:FloatermNext<CR>
+" Keep cursor in middle of screen when moving half page
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+" Reselect visual selection after indenting
+vnoremap < <gv
+vnoremap > >gv
+"Floaterm
+nnoremap <silent> <C-t> :FloatermToggle<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_wintype = 'split'
 let g:floaterm_height = 0.2
 " FZF
-nnoremap <leader>p :Files<CR>
-nnoremap <leader>f :History<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>h :History<CR>
 " DashBoard
 nnoremap <leader>; :Dashboard<CR>
 " LazyGit
@@ -92,7 +95,7 @@ inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<T
 inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 
 " *************************************************************/
-"" Vim Sets **************************************************/
+"" Vim Options ***********************************************/
 :set number
 :set relativenumber
 :set autoindent
@@ -106,88 +109,90 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 :set lazyredraw
 :set termguicolors
 :set cursorline
+:set clipboard+=unnamedplus
+:set scrolloff=5
+:set nowrap
 " ************************************************************/
-" Plugins that require Lua Config*******************************************/
-
+" Plugins that require Lua Config ***************************/
 lua << EOF
 -- Bufferline
 require("bufferline").setup({
-options = {
-    indicator = {
-      icon = ' ',
-    },
-    show_close_icon = false,
-    tab_size = 0,
-    max_name_length = 25,
-    offsets = {
-      {
-        filetype = 'NvimTree',
-        text = '  Files',
-        highlight = 'StatusLine',
-        text_align = 'left',
-      },
-    },
-    separator_style = 'slant',
-    custom_areas = {
-      left = function()
-        return {
-          { text = '    ', fg = '#8fff6d' },
-        }
-      end,
-    },
-  },
-  highlights = {
-    fill = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    background = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    tab = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    tab_close = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    close_button = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-    },
-    close_button_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-    },
-    close_button_selected = {
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-    },
-    buffer_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    modified = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    modified_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    duplicate = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    duplicate_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    separator = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-    separator_selected = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'Normal' }
-    },
-    separator_visible = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-    },
-  },
+	options = {
+		indicator = {
+		  icon = ' ',
+		},
+		show_close_icon = false,
+		tab_size = 0,
+		max_name_length = 25,
+		offsets = {
+		  {
+			filetype = 'NvimTree',
+			text = '  Files',
+			highlight = 'StatusLine',
+			text_align = 'left',
+		  },
+		},
+		separator_style = 'slant',
+		custom_areas = {
+		  left = function()
+			return {
+			  { text = '    ', fg = '#8fff6d' },
+			}
+		  end,
+		},
+	  },
+	  highlights = {
+		fill = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		background = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		tab = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		tab_close = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		close_button = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		close_button_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		close_button_selected = {
+		  fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+		},
+		buffer_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		modified = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		modified_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		duplicate = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		duplicate_visible = {
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		separator = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+		separator_selected = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'Normal' }
+		},
+		separator_visible = {
+		  fg = { attribute = 'bg', highlight = 'StatusLine' },
+		  bg = { attribute = 'bg', highlight = 'StatusLine' },
+		},
+	  },
 })
 -- Git Intergration
 require('gitsigns').setup()
@@ -209,6 +214,12 @@ require('nvim-tree').setup({
       -- inline_arrows = false,
     },
   },
+  update_cwd = true,
+  git_hl = 1,
+  update_focused_file = {
+	  enable = true,
+	  update_cwd = true,
+	},
 })
 
 vim.cmd([[
@@ -246,8 +257,6 @@ db.custom_footer = { '' }
 -- indent blankline
 require("indent_blankline").setup {
     -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
 	show_end_of_line = true,
 	space_char_blankline = " ",
 }
