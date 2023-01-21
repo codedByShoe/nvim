@@ -11,5 +11,6 @@
 		"vue-html": "html",
 		"php": "html",
 		"blade": "html"
-	}
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }

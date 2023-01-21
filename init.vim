@@ -52,12 +52,16 @@ nnoremap <C-q> :q<CR>
 nnoremap <Tab> :bn<CR>
 " Delete Current Buffer
 nnoremap <leader>c :bd<CR>
+" No highlight after search
 nnoremap <leader>l :noh<CR>
+" buffer switching
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
-" Move lines up and down in insert mode
+" Exit insert mode
+:imap jk <Esc>
+"Move lines up and down in insert mode
 inoremap <A-j> <Esc>:move .+1<CR>==gi
 inoremap <A-k> <Esc>:move .-2<CR>==gi
 "Easy way of adding commas and semicolons to end of line
