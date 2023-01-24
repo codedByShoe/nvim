@@ -14,6 +14,7 @@ Plug 'https://github.com/universal-ctags/ctags'
 Plug 'ap/vim-css-color'
 Plug 'arnaud-lb/vim-php-namespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-surround'
 Plug 'nvim-tree/nvim-tree.lua'
@@ -76,8 +77,7 @@ vnoremap > >gv
 "Floaterm
 nnoremap <silent> <C-t> :FloatermToggle<CR>
 tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
-let g:floaterm_wintype = 'split'
-let g:floaterm_height = 0.2
+let g:floaterm_wintype = 'float'
 " FZF
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>h :History<CR>
@@ -263,5 +263,16 @@ require("indent_blankline").setup {
     -- for example, context is off by default, use this to turn it on
 	show_end_of_line = true,
 	space_char_blankline = " ",
+}
+-- treesitter 
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
 EOF
