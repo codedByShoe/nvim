@@ -16,6 +16,7 @@ Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ap/vim-css-color'
 Plug 'rcarriga/nvim-notify'
+Plug 'hood/popui.nvim'
 " ***** Helpers
 Plug 'unblevable/quick-scope'
 Plug 'https://github.com/tpope/vim-commentary'
@@ -26,22 +27,21 @@ Plug 'https://github.com/jiangmiao/auto-pairs'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
-" Plug 'https://github.com/universal-ctags/ctags'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'kdheepak/lazygit.nvim'
 " ***** PHP / Lang
+Plug 'yaegassy/coc-intelephense', {'do': 'yarn install --frozen-lockfile'}
 Plug 'pechorin/any-jump.vim'
 Plug 'wuelnerdotexe/vim-astro'
 Plug 'wavded/vim-stylus'
-Plug 'arnaud-lb/vim-php-namespace'
 Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jwalton512/vim-blade'
+
 Plug 'ccaglak/larago.nvim'
 " ***** Misc
 Plug 'wakatime/vim-wakatime'
-" Plug 'https://github.com/ludovicchabant/vim-gutentags'
 
 call plug#end()
 " **********************************************************/
@@ -56,6 +56,8 @@ colorscheme tokyodark
 " astro config
 let g:astro_typescript = 'enable'
 let g:astro_stylus = 'enable'
+" Popui Available styles: "sharp" | "rounded" | "double"
+let g:popui_border_style = "rounded"
 "**********************************************************/
 " Key Maps ************************************************/
 let mapleader = " "
@@ -67,10 +69,11 @@ nnoremap <C-s> :w<CR>
 nnoremap <C-q> :q<CR>
 " Cycle buffers
 nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
 " Delete Current Buffer
 nnoremap <leader>c :bd<CR>
 " No highlight after search
-nnoremap <leader>l :noh<CR>
+nnoremap <leader>l :nohl<CR>
 " buffer switching
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
@@ -92,7 +95,8 @@ nnoremap <leader>gv :GoBlade<CR>
 "Floaterm
 nnoremap <silent> <C-t> :FloatermToggle<CR>
 tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
-let g:floaterm_wintype = 'float'
+let g:floaterm_wintype = 'split'
+let g:floaterm_height=0.3
 " FZF
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>h :History<CR>
@@ -106,7 +110,8 @@ endfunction
 autocmd FileType php inoremap <C-n> <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php nnoremap <C-n> :call PhpInsertUse()<CR>
 " COC Config ***************************************************/
-" Use K to show documentation in preview window
+
+"Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
@@ -143,6 +148,9 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 " ************************************************************/
 " Plugins that require Lua Config ***************************/
 lua << EOF
+-- popui
+vim.ui.select = require"popui.ui-overrider"
+vim.ui.input = require"popui.input-overrider"
 --Lualine
 local colors = {
   red = '#ca1243',
@@ -400,4 +408,6 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.notify = require("notify")
 EOF
