@@ -15,6 +15,7 @@ Plug 'https://github.com/nvim-tree/nvim-web-devicons'
 Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ap/vim-css-color'
+Plug 'rcarriga/nvim-notify'
 Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'hood/popui.nvim'
@@ -25,6 +26,7 @@ Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
 Plug 'https://github.com/jiangmiao/auto-pairs'
 " ***** Neovim Utils
+Plug 'Mohammed-Taher/AdvancedNewFile.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
@@ -34,7 +36,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'kdheepak/lazygit.nvim'
 " ***** PHP / Lang
 Plug 'yaegassy/coc-intelephense', {'do': 'yarn install --frozen-lockfile'}
-Plug 'pechorin/any-jump.vim'
 Plug 'wuelnerdotexe/vim-astro'
 Plug 'wavded/vim-stylus'
 Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
@@ -91,17 +92,17 @@ inoremap ,, <Esc>A,<Esc>
 vnoremap < <gv
 vnoremap > >gv
 "Blade Go To View
-nnoremap <leader>gv :GoBlade<CR>
+nnoremap gv :GoBlade<CR>
 "Floaterm
 nnoremap <silent> <C-t> :FloatermToggle<CR>
 tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
 let g:floaterm_wintype = 'split'
 let g:floaterm_height=0.3
 " FZF
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>h :History<CR>
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>h :History<CR>
 " LazyGit
-nnoremap <silent> <leader>g :LazyGit<CR>
+nnoremap <silent> <leader>gg :LazyGit<CR>
 " namespace resolver import namespace Ctrl-n
 function! IPhpInsertUse()
     call PhpInsertUse()
@@ -109,6 +110,8 @@ function! IPhpInsertUse()
 endfunction
 autocmd FileType php inoremap <C-n> <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php nnoremap <C-n> :call PhpInsertUse()<CR>
+
+nnoremap <leader>nf :AdvancedNewFile<CR>
 " COC Config ***************************************************/
 
 "Use K to show documentation in preview window
@@ -124,7 +127,7 @@ endfunction
 
 :set updatetime=300
 " COC go to definition
-nnoremap <leader>gd :call CocActionAsync('jumpDefinition')<CR>
+nnoremap gd :call CocActionAsync('jumpDefinition')<CR>
 "COC autocomplete select autocomplete <Tab> in insert mode
 inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
 inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
@@ -133,13 +136,13 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 "" Vim Options ***********************************************/
 :set autoindent
 :set tabstop=4
+:set relativenumber
 :set shiftwidth=4
 :set smarttab
 :set softtabstop=4
 :set mouse=a
 :set hidden
 :set signcolumn=yes
-:set lazyredraw
 :set termguicolors
 :set cursorline
 :set clipboard+=unnamedplus
@@ -148,8 +151,11 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 " ************************************************************/
 " Plugins that require Lua Config ***************************/
 lua << EOF
+require('notify').setup({
+	background_colour = "#000000",
+})
 -- noice config
-require("noice").setup()
+require('noice').setup()
 -- popui
 vim.ui.select = require"popui.ui-overrider"
 vim.ui.input = require"popui.input-overrider"
