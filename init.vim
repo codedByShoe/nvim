@@ -15,7 +15,8 @@ Plug 'https://github.com/nvim-tree/nvim-web-devicons'
 Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ap/vim-css-color'
-Plug 'rcarriga/nvim-notify'
+Plug 'folke/noice.nvim'
+Plug 'MunifTanjim/nui.nvim'
 Plug 'hood/popui.nvim'
 " ***** Helpers
 Plug 'unblevable/quick-scope'
@@ -38,7 +39,6 @@ Plug 'wuelnerdotexe/vim-astro'
 Plug 'wavded/vim-stylus'
 Plug 'yaegassy/coc-astro', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jwalton512/vim-blade'
-
 Plug 'ccaglak/larago.nvim'
 " ***** Misc
 Plug 'wakatime/vim-wakatime'
@@ -148,6 +148,8 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 " ************************************************************/
 " Plugins that require Lua Config ***************************/
 lua << EOF
+-- noice config
+require("noice").setup()
 -- popui
 vim.ui.select = require"popui.ui-overrider"
 vim.ui.input = require"popui.input-overrider"
@@ -409,5 +411,4 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-vim.notify = require("notify")
 EOF
