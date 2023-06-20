@@ -13,5 +13,11 @@
 		"php": "html",
 		"blade": "html"
   },
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "[php]": {
+    "coc.preferences.formatOnSave": true
+  },
+  "intelephense.environment.globalStoragePath": null,
+  "intelephense.client.disableInlayHints": false
+
 }

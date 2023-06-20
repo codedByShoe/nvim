@@ -20,13 +20,11 @@ Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'hood/popui.nvim'
 " ***** Helpers
-Plug 'unblevable/quick-scope'
+Plug 'ggandor/leap.nvim'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'justinmk/vim-sneak'
 Plug 'https://github.com/jiangmiao/auto-pairs'
 " ***** Neovim Utils
-Plug 'Mohammed-Taher/AdvancedNewFile.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
@@ -34,6 +32,7 @@ Plug 'nvim-tree/nvim-tree.lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'kdheepak/lazygit.nvim'
+Plug 'AmeerTaweel/todo.nvim'
 " ***** PHP / Lang
 Plug 'yaegassy/coc-intelephense', {'do': 'yarn install --frozen-lockfile'}
 Plug 'wuelnerdotexe/vim-astro'
@@ -65,14 +64,14 @@ let mapleader = " "
 " Basic leader Mappings
 :nmap <leader>e <Cmd>:NvimTreeToggle<CR>
 " Save Current Buffer
-nnoremap <C-s> :w<CR>
+nnoremap <silent><C-s> :w<CR>
 " Quit Nvim 
 nnoremap <C-q> :q<CR>
 " Cycle buffers
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+nnoremap <silent><Tab> :bn<CR>
+nnoremap <silent><S-Tab> :bp<CR>
 " Delete Current Buffer
-nnoremap <leader>c :bd<CR>
+nnoremap <silent><leader>c :bd<CR>
 " No highlight after search
 nnoremap <leader>l :nohl<CR>
 " buffer switching
@@ -88,6 +87,15 @@ inoremap <A-k> <Esc>:move .-2<CR>==gi
 "Easy way of adding commas and semicolons to end of line
 inoremap ;; <Esc>A;<Esc> 
 inoremap ,, <Esc>A,<Esc> 
+
+" Resize windows with arrows
+nnoremap <C-Up> :resize +2<CR>
+nnoremap <C-Down> :resize -2<CR>
+nnoremap <C-Left> :vertical resize -2<CR>
+nnoremap <C-Right> :vertical resize +2<CR>
+
+inoremap <silent><A-j> <Esc>:move .+1<CR>==gi
+inoremap <silent><A-k> <Esc>:move .-2<CR>==gi
 " Reselect visual selection after indenting
 vnoremap < <gv
 vnoremap > >gv
@@ -103,18 +111,12 @@ nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>h :History<CR>
 " LazyGit
 nnoremap <silent> <leader>gg :LazyGit<CR>
-" namespace resolver import namespace Ctrl-n
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <C-n> <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php nnoremap <C-n> :call PhpInsertUse()<CR>
 
-nnoremap <leader>nf :AdvancedNewFile<CR>
 " COC Config ***************************************************/
 
-"Use K to show documentation in preview window
+" Coc code actions
+nnoremap <silent> <leader>ca :call CocAction('codeAction')<CR>
+" Show documentation
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
@@ -151,11 +153,69 @@ inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
 " ************************************************************/
 " Plugins that require Lua Config ***************************/
 lua << EOF
+-- Todo comments
+require("todo").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+}
+
+-- Leap
+require('leap').add_default_mappings()
+-- notify
 require('notify').setup({
 	background_colour = "#000000",
 })
 -- noice config
-require('noice').setup()
+require('noice').setup({
+	views = {
+      cmdline_popup = {
+        position = {
+          row = 3,
+          col = "50%",
+        },
+        size = {
+          width = 60,
+          height = "auto",
+        },
+		border = {
+          style = "none",
+          padding = { 0, 1 },
+        },
+        win_options = {
+          winhighlight = { "NormalFloat:NormalFloat, FloatBorder:FloatBorder" },
+        },
+      },
+      popupmenu = {
+        relative = "editor",
+        position = {
+          row = 8,
+          col = "50%",
+        },
+        size = {
+          width = 60,
+          height = 10,
+        },
+        border = {
+          style = "rounded",
+          padding = { 0, 1 },
+        },
+        win_options = {
+          winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+        },
+      },
+    },
+	routes = {
+      {
+        filter = {
+          event = "msg_show",
+          kind = "",
+          find = "written",
+        },
+        opts = { skip = true },
+      },
+    },
+})
 -- popui
 vim.ui.select = require"popui.ui-overrider"
 vim.ui.input = require"popui.input-overrider"
