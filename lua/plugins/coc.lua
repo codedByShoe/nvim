@@ -16,7 +16,6 @@ vim.keymap.set('n', '<silent> K', ':ShowDocumentation<CR>', {noremap = true, sil
 
 -- Your insert mode keymaps for COC
 vim.keymap.set('i', '<Tab>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<TAB>"', {expr = true, noremap = true, silent = true})
-vim.keymap.set('i', '<CR>', '\\"<c-g>u\\<CR>"', {expr = true, noremap = true, silent = true})
+-- vim.keymap.set('i', '<CR>', '<C-g>u<CR>', {expr = true, noremap = true, silent = true})
 vim.keymap.set('n', 'gd', ':call CocActionAsync("jumpDefinition")<CR>')
-vim.keymap.set('n', '<leader>ca ', ':call CocAction("codeAction")<CR>', { silent = true })
-
+vim.keymap.set('n', '<leader>ca', ':call CocAction("codeAction")<CR>', { silent = true })

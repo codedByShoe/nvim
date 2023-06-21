@@ -29,7 +29,9 @@ Plug('https://github.com/jiangmiao/auto-pairs')
 Plug('nvim-lua/plenary.nvim')
 Plug('voldikss/vim-floaterm')
 Plug 'nvim-tree/nvim-tree.lua'
+Plug 'famiu/bufdelete.nvim'
 Plug('neoclide/coc.nvim', { branch = 'release'})
+Plug 'junegunn/fzf.vim'
 Plug('junegunn/fzf', {
 	['do'] =  function()
 		vim.call('fzf#install')

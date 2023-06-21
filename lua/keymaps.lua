@@ -9,7 +9,7 @@ vim.keymap.set('n', '<C-q>', ':q!<CR>')
 vim.keymap.set('n', '<Tab>', ':bn<CR>', { silent = true })
 vim.keymap.set('n', '<S-Tab>', ':bp<CR>', { silent = true })
 -- Delete Current Buffer
-vim.keymap.set('n', '<leader>c', ':bd<CR>', { silent = true })
+vim.keymap.set('n', '<leader>c', ':Bdelete<CR>', { silent = true })
 -- " buffer switching
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
@@ -34,8 +34,8 @@ vim.keymap.set('v', '>', '>gv')
 -- "Blade Go To View
 vim.keymap.set('n', 'gv', ':GoBlade<CR>')
 -- "Floaterm
-vim.keymap.set('n', '<C-t>', ':FloattermToggle<CR>', { silent = true })
-vim.keymap.set('t', '<C-t>', ':FloattermToggle<CR>', { silent = true })
+vim.keymap.set('n', '<C-t>', ':FloatermToggle<CR>', { silent = true })
+vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermToggle<CR>', { silent = true })
 -- " FZF
 vim.keymap.set('n', '<leader>f', ':Files<CR>', { silent = true })
 vim.keymap.set('n', '<leader>h', ':History<CR>', { silent = true })

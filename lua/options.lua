@@ -1,6 +1,8 @@
+local vim = vim
 vim.opt.autoindent = true
 vim.opt.tabstop = 4
 vim.opt.relativenumber = true
+vim.wo.number = true
 vim.opt.shiftwidth = 4
 vim.opt.smarttab = true
 vim.opt.softtabstop = 4

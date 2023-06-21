@@ -36,6 +36,8 @@ require('gitsigns').setup()
 
 require('plugins.nvimtree')
 
+require('bufdelete').bufdelete(0, true)
+
 require('notify').setup({
 	background_colour = "#000000",
 })
