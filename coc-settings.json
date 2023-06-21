@@ -18,6 +18,8 @@
     "coc.preferences.formatOnSave": true
   },
   "intelephense.environment.globalStoragePath": null,
-  "intelephense.client.disableInlayHints": false
+  "intelephense.client.disableInlayHints": true,
+  "intelephense.completion.insertUseDeclaration": true
+
 
 }
