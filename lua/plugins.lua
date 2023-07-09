@@ -1,5 +1,5 @@
 local Plug = vim.fn['plug#']
-local PATH = "C:\\Users\\Andrew\\AppData\\Local\\nvim-data\\Plugged"
+local PATH = "C:\\Users\\Andre\\AppData\\Local\\nvim-data\\Plugged"
 vim.call('plug#begin', PATH)
 -- UI
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -31,12 +31,8 @@ Plug('voldikss/vim-floaterm')
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'famiu/bufdelete.nvim'
 Plug('neoclide/coc.nvim', { branch = 'release'})
-Plug 'junegunn/fzf.vim'
-Plug('junegunn/fzf', {
-	['do'] =  function()
-		vim.call('fzf#install')
-	end
-	})
+-- Plug 'junegunn/fzf.vim'
+Plug(Plug 'nvim-telescope/telescope.nvim', { tag = '0.1.2' })
 Plug 'kdheepak/lazygit.nvim'
 Plug 'AmeerTaweel/todo.nvim'
 -- PHP / Lang

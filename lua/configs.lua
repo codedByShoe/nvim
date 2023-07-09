@@ -22,6 +22,8 @@ require('plugins.coc')
 
 require('leap').add_default_mappings()
 
+require('plugins.telescope')
+
 require('plugins.noice')
 
 require("todo").setup()
