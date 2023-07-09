@@ -15,7 +15,7 @@ require("bufferline").setup({
 			text_align = 'left',
 		  },
 		},
-		separator_style = 'slant',
+		separator_style = 'slope',
 		custom_areas = {
 		  left = function()
 			return {
@@ -24,7 +24,7 @@ require("bufferline").setup({
 		  end,
 		},
 	  },
-	  highlights = {
+	   highlights = {
 		fill = {
 		  bg = { attribute = 'bg', highlight = 'StatusLine' },
 		},
@@ -76,4 +76,4 @@ require("bufferline").setup({
 		  bg = { attribute = 'bg', highlight = 'StatusLine' },
 		},
 	  },
-})
+	 })

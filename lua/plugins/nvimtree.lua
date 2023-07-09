@@ -3,6 +3,9 @@ require('nvim-tree').setup({
   git = {
     ignore = false,
   },
+  view = {
+    width = 25,
+  },
   renderer = {
     highlight_opened_files = '1',
     group_empty = true,
