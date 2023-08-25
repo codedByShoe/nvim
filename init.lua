@@ -245,7 +245,7 @@ local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
 vim.keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { silent = true })
 
 -- TODO comment
-vim.keymap.set('n', '<leader>tl', ':TODOQuickfixList<CR>', { silent = true })
+vim.keymap.set('n', '<leader>st', ':TODOQuickfixList<CR>', { silent = true })
 
 -- [[ Configure Telescope ]]
 require('telescope').setup {
@@ -390,7 +390,7 @@ end
 -- Enable the following language servers
 local servers = {
   tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs', 'php' } },
+  html = {},
   intelephense = {},
   tailwindcss = {};
   emmet_ls = {
