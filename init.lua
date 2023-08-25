@@ -21,6 +21,8 @@ require('lazy').setup({
   'jwalton512/vim-blade',
   -- Add todo comment searching
   {'AmeerTaweel/todo.nvim', opts = {}},
+  -- wakatime time tracker
+  'wakatime/vim-wakatime',
   -- add surrounding brackets
   'tpope/vim-surround',
   -- adds css colors on the screen
