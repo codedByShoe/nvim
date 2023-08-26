@@ -391,6 +391,7 @@ end
 local servers = {
   tsserver = {},
   html = {},
+  cssls = {},
   intelephense = {},
   tailwindcss = {};
   emmet_ls = {
