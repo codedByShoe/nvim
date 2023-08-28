@@ -395,7 +395,15 @@ local servers = {
   intelephense = {},
   tailwindcss = {};
   emmet_ls = {
-    filetypes = { 'html', 'php', 'twig', 'javascript', 'css', 'scss' }
+    filetypes = { 'html', 'blade', 'twig', 'javascript', 'css', 'scss' },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
   },
 
   lua_ls = {
