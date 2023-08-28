@@ -25,8 +25,6 @@ require('lazy').setup({
   'wakatime/vim-wakatime',
   -- add surrounding brackets
   'tpope/vim-surround',
-  -- adds css colors on the screen
-  'ap/vim-css-color',
   -- indent on new blanklines
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -43,13 +41,13 @@ require('lazy').setup({
   -- Vertical navigation
   {
     'ggandor/leap.nvim',
-    config = function(_)
+    opts = function(_, opts)
       local leap = require("leap")
       leap.add_default_mappings(true)
     end,
   },
   {
-    -- LSP Configuration & Plugins
+    -- [[ LSP Configuration & Plugins ]]
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -59,7 +57,6 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -80,6 +77,15 @@ require('lazy').setup({
       persist_size = true,
     }
   },
+  -- Add css colors in css files and inline styles
+  {
+    "NvChad/nvim-colorizer.lua",
+    opts = {
+      user_default_options = {
+        tailwind = true,
+      },
+    }
+  },
 
   {
     -- Autocompletion
@@ -88,13 +94,23 @@ require('lazy').setup({
       -- Snippet Engine & its associated nvim-cmp source
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
-
       -- Adds a number of user-friendly snippets
-      -- 'rafamadriz/friendly-snippets',
+      'rafamadriz/friendly-snippets',
+      -- add colorizer to cmp snippet window
+      {
+        "roobert/tailwindcss-colorizer-cmp.nvim",
+        opts = {
+          color_square_width = 2,
+        }
+      },
     },
+    opts = function(_, opts)
+      opts.formatting = {
+        format = require("tailwindcss-colorizer-cmp").formatter,
+      }
+    end,
   },
 
   {
@@ -105,6 +121,7 @@ require('lazy').setup({
     },
     opts = {}
   },
+
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -199,38 +216,30 @@ require('lazy').setup({
 }, {})
 
 -- [[ Setting options ]]
--- Set highlight on search
 vim.o.hlsearch = false
--- Make line numbers default
--- vim.wo.number = true
--- Enable mouse mode
 vim.o.mouse = 'a'
--- Sync clipboard between OS and Neovim.
 vim.o.clipboard = 'unnamedplus'
--- Enable break indent
 vim.o.breakindent = true
--- Save undo history
 vim.o.undofile = true
--- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
--- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
--- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
--- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
--- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 -- Keymaps for better default experience
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+-- " Exit insert mode
 vim.keymap.set('i', 'jk', '<Esc>', { silent = true })
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", { silent = true })
 vim.keymap.set("v", ">", ">gv", { silent = true })
+-- Easy insertion of a trailing ; or , from insert mode.
+vim.keymap.set('i', ';;', '<Esc>A;<Esc>')
+vim.keymap.set('i', ',,', '<Esc>A,<Esc>')
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -239,7 +248,6 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
--- " Exit insert mode
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -258,6 +266,7 @@ function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
 
+-- Open lazygit in terminal
 vim.keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { silent = true })
 
 -- TODO comment
@@ -296,7 +305,8 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- [[ Configure Treesitter ]]
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'php', 'tsx', 'typescript', 'vimdoc', 'vim', 'css',
+    'javascript' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -408,11 +418,13 @@ local servers = {
   tsserver = {},
   html = {},
   cssls = {},
+  jsonls = {},
   intelephense = {},
   tailwindcss = {},
-  emmet_ls = {
-    filetypes = { 'html', 'blade', 'twig', 'javascript', 'css', 'scss' },
+  emmet_language_server = {
+    filetypes = { 'html', 'php', 'blade', 'twig', 'javascript', 'css', 'scss' },
     init_options = {
+      preferences = {},
       html = {
         options = {
           -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
