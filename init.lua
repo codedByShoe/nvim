@@ -20,7 +20,7 @@ require('lazy').setup({
   -- Laravel Blade syntax highlighting
   'jwalton512/vim-blade',
   -- Add todo comment searching
-  {'AmeerTaweel/todo.nvim', opts = {}},
+  { 'AmeerTaweel/todo.nvim', opts = {} },
   -- wakatime time tracker
   'wakatime/vim-wakatime',
   -- add surrounding brackets
@@ -28,7 +28,9 @@ require('lazy').setup({
   -- adds css colors on the screen
   'ap/vim-css-color',
   -- indent on new blanklines
-  {'lukas-reineke/indent-blankline.nvim', opts = {
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    opts = {
       show_end_of_line = true,
       space_char_blankline = " ",
     }
@@ -39,11 +41,12 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   -- Vertical navigation
-  {'ggandor/leap.nvim',
+  {
+    'ggandor/leap.nvim',
     config = function(_)
-    local leap = require("leap")
-    leap.add_default_mappings(true)
-  end,
+      local leap = require("leap")
+      leap.add_default_mappings(true)
+    end,
   },
   {
     -- LSP Configuration & Plugins
@@ -94,10 +97,11 @@ require('lazy').setup({
     },
   },
 
-  { 'windwp/nvim-autopairs',
+  {
+    'windwp/nvim-autopairs',
     event = "InsertEnter",
     dependencies = {
-    "hrsh7th/nvim-cmp"
+      "hrsh7th/nvim-cmp"
     },
     opts = {}
   },
@@ -174,6 +178,14 @@ require('lazy').setup({
         end,
       },
     },
+    opts = {
+      defaults = {
+        prompt_prefix = " ",
+        selection_caret = " ",
+        path_display = { "smart" },
+        file_ignore_patterns = { "node_modules", "vendor" },
+      }
+    },
   },
 
   {
@@ -242,9 +254,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
 
-  function _LAZYGIT_TOGGLE()
-    lazygit:toggle()
-  end
+function _LAZYGIT_TOGGLE()
+  lazygit:toggle()
+end
+
 vim.keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { silent = true })
 
 -- TODO comment
@@ -396,7 +409,7 @@ local servers = {
   html = {},
   cssls = {},
   intelephense = {},
-  tailwindcss = {};
+  tailwindcss = {},
   emmet_ls = {
     filetypes = { 'html', 'blade', 'twig', 'javascript', 'css', 'scss' },
     init_options = {
@@ -439,16 +452,16 @@ mason_lspconfig.setup_handlers {
     }
   end
 }
- local signs = {
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
-  }
+local signs = {
+  { name = "DiagnosticSignError", text = "" },
+  { name = "DiagnosticSignWarn", text = "" },
+  { name = "DiagnosticSignHint", text = "" },
+  { name = "DiagnosticSignInfo", text = "" },
+}
 
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
+for _, sign in ipairs(signs) do
+  vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+end
 
 
 -- [[ Configure nvim-cmp ]]
