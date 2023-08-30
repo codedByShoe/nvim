@@ -153,6 +153,148 @@ require('lazy').setup({
       vim.cmd.colorscheme 'onedark'
     end,
   },
+  -- Set nvim tree as file explorer
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      renderer = {
+        icons = {
+          glyphs = {
+            default = "",
+            symlink = "",
+            folder = {
+              arrow_open = "",
+              arrow_closed = "",
+              default = "",
+              open = "",
+              empty = "",
+              empty_open = "",
+              symlink = "",
+              symlink_open = "",
+            },
+            git = {
+              unstaged = "",
+              staged = "S",
+              unmerged = "",
+              renamed = "➜",
+              untracked = "U",
+              deleted = "",
+              ignored = "◌",
+            },
+          },
+        },
+      },
+      diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        icons = {
+          hint = "󰌵",
+          info = "",
+          warning = "",
+          error = "",
+        },
+      },
+      view = {
+        width = 30,
+        side = "left",
+      },
+    }
+  },
+
+  {
+    "akinsho/bufferline.nvim",
+    event = { "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
+    dependencies = {
+      "famiu/bufdelete.nvim",
+    },
+    opts = {
+      options = {
+        close_command = "Bdelete! %d",     -- can be a string | function, see "Mouse actions"
+        right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+        offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+        separator_style = "thin",          -- | "thick" | "thin" | { 'any', 'any' },
+      },
+      highlights = {
+        fill = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        background = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        buffer_visible = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        close_button = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        close_button_visible = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        tab_selected = {
+          fg = { attribute = "fg", highlight = "Normal" },
+          bg = { attribute = "bg", highlight = "Normal" },
+        },
+        tab = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        tab_close = {
+          -- fg = {attribute='fg',highlight='LspDiagnosticsDefaultError'},
+          fg = { attribute = "fg", highlight = "TabLineSel" },
+          bg = { attribute = "bg", highlight = "Normal" },
+        },
+        duplicate_selected = {
+          fg = { attribute = "fg", highlight = "TabLineSel" },
+          bg = { attribute = "bg", highlight = "TabLineSel" },
+          italic = true,
+        },
+        duplicate_visible = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+          italic = true,
+        },
+        duplicate = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+          italic = true,
+        },
+        modified = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        modified_selected = {
+          fg = { attribute = "fg", highlight = "Normal" },
+          bg = { attribute = "bg", highlight = "Normal" },
+        },
+        modified_visible = {
+          fg = { attribute = "fg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        separator = {
+          fg = { attribute = "bg", highlight = "TabLine" },
+          bg = { attribute = "bg", highlight = "TabLine" },
+        },
+        separator_selected = {
+          fg = { attribute = "bg", highlight = "Normal" },
+          bg = { attribute = "bg", highlight = "Normal" },
+        },
+        indicator_selected = {
+          fg = { attribute = "fg", highlight = "LspDiagnosticsDefaultHint" },
+          bg = { attribute = "bg", highlight = "Normal" },
+        },
+      },
+    }
+  },
 
   {
     -- Set lualine as statusline
@@ -248,6 +390,13 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
+-- Maintain the cursor position when yanking a visual selection.
+-- http://ddrscott.github.io/blog/2016/yank-without-jank/
+vim.keymap.set('v', 'y', 'myy`y')
+vim.keymap.set('v', 'Y', 'myY`y')
+-- Paste replace visual selection without copying it.
+vim.keymap.set('v', 'p', '"_dP')
+
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -272,6 +421,17 @@ vim.keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { silent = t
 -- TODO comment
 vim.keymap.set('n', '<leader>st', ':TODOQuickfixList<CR>', { silent = true })
 
+-- NvimTree Toggle
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { silent = true })
+
+-- Navigate buffers
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true })
+vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
+
+-- Comment
+vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { silent = true })
+vim.keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { silent = true })
+
 -- [[ Configure Telescope ]]
 require('telescope').setup {
   defaults = {
@@ -288,7 +448,7 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set('n', '<leader>b', function()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
@@ -371,7 +531,7 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>dm', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Configure LSP ]]
