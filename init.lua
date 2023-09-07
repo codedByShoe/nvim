@@ -25,6 +25,8 @@ require('lazy').setup({
   'wakatime/vim-wakatime',
   -- add surrounding brackets
   'tpope/vim-surround',
+  -- transprent background
+  'xiyaowong/transparent.nvim',
   -- indent on new blanklines
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -32,6 +34,7 @@ require('lazy').setup({
       show_end_of_line = true,
       space_char_blankline = " ",
     }
+
   },
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -144,13 +147,11 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    "ellisonleao/gruvbox.nvim",
     priority = 1000,
     config = function()
-      require("onedark").setup {
-        style = "darker"
-      }
-      vim.cmd.colorscheme 'onedark'
+      require("gruvbox").setup {}
+      vim.cmd([[colorscheme gruvbox]])
     end,
   },
   -- Set nvim tree as file explorer
@@ -214,83 +215,79 @@ require('lazy').setup({
     },
     opts = {
       options = {
-        close_command = "Bdelete! %d",     -- can be a string | function, see "Mouse actions"
-        right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
-        offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-        separator_style = "thin",          -- | "thick" | "thin" | { 'any', 'any' },
+        indicator = {
+          icon = ' ',
+        },
+        show_close_icon = false,
+        tab_size = 0,
+        max_name_length = 25,
+        offsets = {
+          {
+            filetype = 'NvimTree',
+            text = '  Files',
+            highlight = 'StatusLine',
+            text_align = 'left',
+          },
+        },
+        separator_style = 'slope',
+        custom_areas = {
+          left = function()
+            return {
+              { text = '    ', fg = '#8fff6d' },
+            }
+          end,
+        },
       },
       highlights = {
         fill = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         background = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-        },
-        buffer_visible = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-        },
-        close_button = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-        },
-        close_button_visible = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-        },
-        tab_selected = {
-          fg = { attribute = "fg", highlight = "Normal" },
-          bg = { attribute = "bg", highlight = "Normal" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         tab = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         tab_close = {
-          -- fg = {attribute='fg',highlight='LspDiagnosticsDefaultError'},
-          fg = { attribute = "fg", highlight = "TabLineSel" },
-          bg = { attribute = "bg", highlight = "Normal" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
-        duplicate_selected = {
-          fg = { attribute = "fg", highlight = "TabLineSel" },
-          bg = { attribute = "bg", highlight = "TabLineSel" },
-          italic = true,
+        close_button = {
+          bg = { attribute = 'bg', highlight = 'TabLine' },
+          fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
         },
-        duplicate_visible = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-          italic = true,
+        close_button_visible = {
+          bg = { attribute = 'bg', highlight = 'TabLine' },
+          fg = { attribute = 'fg', highlight = 'TabLine' },
         },
-        duplicate = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-          italic = true,
+        close_button_selected = {
+          fg = { attribute = 'fg', highlight = 'TabLine' },
+        },
+        buffer_visible = {
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         modified = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
-        },
-        modified_selected = {
-          fg = { attribute = "fg", highlight = "Normal" },
-          bg = { attribute = "bg", highlight = "Normal" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         modified_visible = {
-          fg = { attribute = "fg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
+        },
+        duplicate = {
+          bg = { attribute = 'bg', highlight = 'TabLine' },
+        },
+        duplicate_visible = {
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         separator = {
-          fg = { attribute = "bg", highlight = "TabLine" },
-          bg = { attribute = "bg", highlight = "TabLine" },
+          fg = { attribute = 'bg', highlight = 'TabLine' },
+          bg = { attribute = 'bg', highlight = 'TabLine' },
         },
         separator_selected = {
-          fg = { attribute = "bg", highlight = "Normal" },
-          bg = { attribute = "bg", highlight = "Normal" },
+          fg = { attribute = 'bg', highlight = 'TabLine' },
+          bg = { attribute = 'bg', highlight = 'Normal' }
         },
-        indicator_selected = {
-          fg = { attribute = "fg", highlight = "LspDiagnosticsDefaultHint" },
-          bg = { attribute = "bg", highlight = "Normal" },
+        separator_visible = {
+          fg = { attribute = 'bg', highlight = 'StatusLine' },
+          bg = { attribute = 'bg', highlight = 'StatusLine' },
         },
       },
     }
@@ -302,7 +299,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'gruvbox_dark',
         component_separators = '|',
         section_separators = '',
       },
@@ -347,6 +344,8 @@ require('lazy').setup({
     },
   },
 
+  require 'kickstart.plugins.autoformat',
+
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -370,6 +369,7 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
+vim.o.cursorline = true
 
 -- [[ Basic Keymaps ]]
 -- Keymaps for better default experience
@@ -430,7 +430,8 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 
 -- Comment
 vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { silent = true })
-vim.keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { silent = true })
+vim.keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+  { silent = true })
 
 -- [[ Configure Telescope ]]
 require('telescope').setup {
