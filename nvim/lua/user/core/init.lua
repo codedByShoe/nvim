@@ -1,0 +1,7 @@
+require("user.core.cmp")
+require("user.core.keymaps")
+require("user.core.options")
+require("user.core.lsp")
+require("user.core.highlight")
+require("user.core.telescope")
+require("user.core.treesitter")
