@@ -69,7 +69,7 @@ keymap('n', 'zk',
 keymap({"n", "t"}, "<C-t>", "<cmd>ToggleTerm<CR>", { silent = true })
 -- todo-comment
 keymap("n", "<leader>st", "<cmd>TodoTelescope<CR>", { silent = true })
--- lazygir
+-- lazygit
 keymap("n", "<leader>gg",
   function()
     local Terminal = require('toggleterm.terminal').Terminal

@@ -79,7 +79,7 @@ require('mason').setup()
 require('mason-lspconfig').setup()
 
 local servers = {
-  gopls = {},
+  bashls = {},
   templ = {},
   tsserver = {},
   html = { filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ' } },
