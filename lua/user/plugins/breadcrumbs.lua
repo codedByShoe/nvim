@@ -1,4 +1,7 @@
 return {
-    "LunarVim/breadcrumbs.nvim",
-    opts = {}
-  }
+  "LunarVim/breadcrumbs.nvim",
+  dependencies = {
+    { "SmiteshP/nvim-navic" },
+  },
+  opts = {}
+}

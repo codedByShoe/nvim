@@ -27,7 +27,6 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -78,11 +77,42 @@ end
 require('mason').setup()
 require('mason-lspconfig').setup()
 
+-- NOTE: add custom filetypes for servers
+vim.filetype.add({
+  extension = {
+    templ = "templ",
+  },
+})
+
 local servers = {
   bashls = {},
+  gopls = {
+    cmd = {"gopls"},
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  },
+  cssls = {},
+  volar = {},
   templ = {},
+  sqlls = {
+    cmd = { "sql-language-server", "up", "--method", "stdio" },
+    filetypes = { "sql", "mysql" },
+  },
   tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ' } },
+  html = {
+    configurationSection = { "html", "css", "javascript" },
+    embeddedLanguages = {
+      css = true,
+      javascript = true
+    },
+    provideFormatter = true,
+    settings = {
+      format = {
+        indentInnerHtml = true
+      },
+    },
+    filetypes = { 'html', 'tmpl', 'hbs', 'gohtml', 'templ' }
+  },
+  jsonls = {},
   intelephense = {
     cmd = { "intelephense", "--stdio" },
   },
@@ -90,12 +120,36 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
-      -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
+      diagnostics = { disable = { 'missing-fields' } },
     },
   },
-  tailwindcss = {},
-  emmet_ls = {filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact' }}
+  tailwindcss = {
+    tailwindCSS = {
+      classAttributes = { "class", "className", "class:list" },
+      lint = {
+        cssConflict = "warning",
+        invalidApply = "error",
+        invalidConfigPath = "error",
+        invalidScreen = "error",
+        invalidTailwindDirective = "error",
+        invalidVariant = "error",
+        recommendedVariantOrder = "warning"
+      },
+      validate = true
+    },
+    filetypes = {
+      "astro", "astro-markdown", "blade", "tmpl", "gohtml", "html", "liquid", "markdown", "mdx", "php", "twig",
+      "css", "sass", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte",
+      "templ"
+    },
+    init_options = {
+      userLanguages = {
+        blade = "html",
+        templ = "html"
+      }
+    }
+  },
+  emmet_ls = { filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact' } }
 }
 
 -- Setup neovim lua configuration

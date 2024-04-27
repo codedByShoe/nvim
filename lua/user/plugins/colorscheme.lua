@@ -1,9 +1,9 @@
 return {
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require('tokyonight').setup({
       style = 'night',
       transparent = true,
       styles = {
@@ -12,6 +12,9 @@ return {
         comments = { italic = true },
         keywords = { italic = true },
       },
-    },
-  },
+       lualine_bold = true,
+    })
+    vim.cmd("colorscheme tokyonight")
+  end
+
 }

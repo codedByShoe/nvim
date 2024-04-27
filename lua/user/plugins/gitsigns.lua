@@ -2,11 +2,11 @@ return {
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '▎' },
-        change = { text = '▎' },
-        delete = { text = '󰐊' },
-        topdelete = { text = '󰐊' },
-        changedelete = { text = '▎' },
+        add = { text = ' ' },
+        change = { text = ' ▎' },
+        delete = { text = "" },
+        topdelete = { text = "" },
+        changedelete = { text = ' ▎' },
       },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
@@ -40,14 +40,10 @@ return {
 
         -- Actions
         -- visual mode
-        map('v', '<leader>hs', function()
-          gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'stage git hunk' })
         map('v', '<leader>hr', function()
           gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'reset git hunk' })
         -- normal mode
-        map('n', '<leader>hs', gs.stage_hunk, { desc = 'git stage hunk' })
         map('n', '<leader>hr', gs.reset_hunk, { desc = 'git reset hunk' })
         map('n', '<leader>hS', gs.stage_buffer, { desc = 'git Stage buffer' })
         map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
