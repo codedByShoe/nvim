@@ -1,4 +1,3 @@
-
 -- [[ Setting options ]]
 vim.opt.hlsearch = false
 vim.opt.mouse = 'a'
@@ -15,7 +14,7 @@ vim.opt.relativenumber = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.completeopt = 'menuone,noselect'
 vim.opt.termguicolors = true
-vim.opt.foldcolumn = '1'
+vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
@@ -37,22 +36,19 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_banner = false
 vim.opt.scrolloff = 10
 
-vim.opt.fillchars = {
-  fold = " ",
-  foldopen = "",
-  foldclose = "",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
-}
+-- vim.opt.fillchars = {
+--   fold = " ",
+--   foldopen = "",
+--   foldclose = "",
+-- }
 
-vim.opt.list = true
+-- vim.opt.list = true
 
-vim.opt.listchars = {
-  tab = "▸ ",
-  trail = "·",
-  extends = "›",
-  precedes = "‹",
-  eol = "↲",
-  nbsp = "␣",
-}
+-- vim.opt.listchars = {
+--   tab = "▸ ",
+--   trail = "·",
+--   extends = "›",
+--   precedes = "‹",
+--   eol = "↲",
+--   nbsp = "␣",
+-- }

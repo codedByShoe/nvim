@@ -1,12 +1,5 @@
 -- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -25,7 +18,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 
   -- Lesser used LSP functionality
@@ -35,11 +27,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
 end
 
 local icons = require('user.core.icons')
@@ -87,7 +74,7 @@ vim.filetype.add({
 local servers = {
   bashls = {},
   gopls = {
-    cmd = {"gopls"},
+    cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
   },
   cssls = {},
@@ -124,30 +111,11 @@ local servers = {
     },
   },
   tailwindcss = {
-    tailwindCSS = {
-      classAttributes = { "class", "className", "class:list" },
-      lint = {
-        cssConflict = "warning",
-        invalidApply = "error",
-        invalidConfigPath = "error",
-        invalidScreen = "error",
-        invalidTailwindDirective = "error",
-        invalidVariant = "error",
-        recommendedVariantOrder = "warning"
-      },
-      validate = true
-    },
     filetypes = {
       "astro", "astro-markdown", "blade", "tmpl", "gohtml", "html", "liquid", "markdown", "mdx", "php", "twig",
       "css", "sass", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte",
       "templ"
     },
-    init_options = {
-      userLanguages = {
-        blade = "html",
-        templ = "html"
-      }
-    }
   },
   emmet_ls = { filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact' } }
 }
