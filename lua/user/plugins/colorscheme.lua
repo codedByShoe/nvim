@@ -1,23 +1,23 @@
--- return {
---   "folke/tokyonight.nvim",
---   lazy = false,
---   priority = 1000,
---   config = function()
---     require('tokyonight').setup({
---       style = 'night',
---       transparent = true,
---       styles = {
---         sidebars = "transparent",
---         floats = "transparent",
---         comments = { italic = true },
---         keywords = { italic = true },
---       },
---        lualine_bold = true,
---     })
---     vim.cmd("colorscheme tokyonight")
---   end
---
--- }
+return {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+        require('tokyonight').setup({
+            style = 'night',
+            transparent = true,
+            styles = {
+                sidebars = "transparent",
+                floats = "transparent",
+                comments = { italic = true },
+                keywords = { italic = true },
+            },
+            lualine_bold = true,
+        })
+        vim.cmd("colorscheme tokyonight")
+    end
+
+}
 
 -- return {
 --     "olimorris/onedarkpro.nvim",
@@ -55,18 +55,18 @@
 --
 -- }
 
-return {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-        require("cyberdream").setup({
-            transparent = true,
-            italic_comments = true,
-            hide_fillchars = true,
-            borderless_telescope = true,
-            terminal_colors = true,
-        })
-        vim.cmd("colorscheme cyberdream") -- set the colorscheme
-    end,
-}
+-- return {
+--     "scottmckendry/cyberdream.nvim",
+--     lazy = false,
+--     priority = 1000,
+--     config = function()
+--         require("cyberdream").setup({
+--             transparent = true,
+--             italic_comments = true,
+--             hide_fillchars = true,
+--             borderless_telescope = true,
+--             terminal_colors = true,
+--         })
+--         vim.cmd("colorscheme cyberdream") -- set the colorscheme
+--     end,
+-- }

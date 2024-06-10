@@ -2,24 +2,27 @@
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
+  ---@class ParserInfo[]
+  local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+  parser_config.blade = {
+    install_info = {
+      url = "https://github.com/EmranMR/tree-sitter-blade",
+      files = {
+        "src/parser.c",
+        -- 'src/scanner.cc',
+      },
+      branch = "main",
+      generate_requires_npm = true,
+      requires_generate_from_grammar = true,
+    },
+    filetype = "blade",
+  }
+
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed =
-    { 'c',
-      'php',
-      'go',
-      'lua',
-      'tsx',
-      'javascript',
-      'typescript',
-      'vimdoc',
-      'vim',
-      'bash',
-      'http',
-      'json' },
-
+    ensure_installed = "all",
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
+    auto_install = true,
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
     -- List of parsers to ignore installing
@@ -83,5 +86,3 @@ vim.defer_fn(function()
     },
   }
 end, 0)
-
-

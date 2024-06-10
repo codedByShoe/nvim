@@ -30,6 +30,7 @@ local on_attach = function(_, bufnr)
 end
 
 local icons = require('user.core.icons')
+local mason_lspconfig = require 'mason-lspconfig'
 
 local default_diagnostic_config = {
   signs = {
@@ -84,7 +85,9 @@ local servers = {
     cmd = { "sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
   },
-  tsserver = {},
+  tsserver = {
+    filetypes = { 'javascript', 'typescript' }
+  },
   html = {
     configurationSection = { "html", "css", "javascript" },
     embeddedLanguages = {
@@ -97,11 +100,12 @@ local servers = {
         indentInnerHtml = true
       },
     },
-    filetypes = { 'html', 'tmpl', 'hbs', 'gohtml', 'templ' }
+    filetypes = { 'html', 'tmpl', 'hbs', 'gohtml', 'templ', 'ejs' }
   },
   jsonls = {},
   intelephense = {
     cmd = { "intelephense", "--stdio" },
+    filetypes = { 'php' }
   },
   lua_ls = {
     Lua = {
@@ -113,11 +117,21 @@ local servers = {
   tailwindcss = {
     filetypes = {
       "astro", "astro-markdown", "blade", "tmpl", "gohtml", "html", "liquid", "markdown", "mdx", "php", "twig",
-      "css", "sass", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte",
+      "css", "ejs", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte",
       "templ"
     },
   },
-  emmet_ls = { filetypes = { 'html', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact' } }
+  emmet_ls = {
+    filetypes = { 'html', 'ejs', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact', 'blade' },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
+  }
 }
 
 -- Setup neovim lua configuration
@@ -128,12 +142,38 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
+-- configure blade lsp
+local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
+
+configs.blade = {
+  default_config = {
+    -- Path to the executable: laravel-dev-generators
+    cmd = { vim.fn.expand("$HOME/laravel-dev-tools/builds/laravel-dev-tools"), "lsp" },
+    filetypes = { 'blade' },
+    root_dir = function(pattern)
+      local util = require("lspconfig.util")
+      local cwd = vim.loop.cwd()
+      local root = util.root_pattern("composer.json", ".git", ".phpactor.json", ".phpactor.yml")(pattern)
+
+      -- prefer cwd if root is a descendant
+      return util.path.is_descendant(cwd, root) and cwd or root
+    end,
+    settings = {},
+  },
+}
+-- Set it up
+lspconfig.blade.setup {
+  -- Capabilities is specific to my setup.
+  capabilities = capabilities
+}
+
+
+-- setup default configs
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
