@@ -29,6 +29,8 @@ vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.formatoptions = "rqnl1j"
 vim.opt.incsearch = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 -- Save undo history
 vim.opt.undofile = true
 -- netrw

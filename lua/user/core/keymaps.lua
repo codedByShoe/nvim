@@ -1,3 +1,4 @@
+-- [[ Quality of life keymaps Plugin specific keymaps are defined in pluin config ]]
 local keymap = vim.keymap.set
 
 -- Keymaps for better default experience
@@ -35,52 +36,3 @@ keymap("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 
 -- kill current buffer
 keymap("n", "<leader>c", ":bd!<CR>", { silent = true })
-
--- Diagnostic keymaps
-keymap('n', '[d', vim.diagnostic.goto_prev)
-keymap('n', ']d', vim.diagnostic.goto_next)
-keymap('n', '<leader>d', vim.diagnostic.open_float)
-keymap('n', '<leader>q', vim.diagnostic.setloclist)
--- mini files
-keymap('n', '<leader>e', '<cmd>lua MiniFiles.open() <CR>', { silent = true })
-
-keymap("n", "<leader>ge", "<cmd>GoIfErr<CR>", { silent = true })
-
--- harpoon
-keymap("n", "<leader>ha", ":lua require('harpoon.mark').add_file() <CR>", { silent = true })
-keymap("n", "<leader>hs", ":Telescope harpoon marks <CR>", { silent = true })
-keymap("n", "<leader>he", ":lua require('harpoon.ui').toggle_quick_menu() <CR>", { silent = true })
-keymap("n", "<leader>1", ":lua require('harpoon.ui').nav_file(1) <CR>", { silent = true })
-keymap("n", "<leader>2", ":lua require('harpoon.ui').nav_file(2) <CR>", { silent = true })
-keymap("n", "<leader>3", ":lua require('harpoon.ui').nav_file(3) <CR>", { silent = true })
-keymap("n", "<leader>4", ":lua require('harpoon.ui').nav_file(4) <CR>", { silent = true })
-
--- ufo
-keymap('n', 'zr', require('ufo').openAllFolds, { silent = true })
-keymap('n', 'zm', require('ufo').closeAllFolds, { silent = true })
-keymap('n', 'zk', function()
-  local winid = require('ufo').peekFoldedLinesUnderCursor()
-  if not winid then
-    vim.lsp.buf.hover()
-  end
-end, { silent = true })
-
--- phptools
-keymap('n', '<leader>pm', "<cmd>PhpMethod<cr>", { silent = true })
-keymap('n', "<leader>pc", "<cmd>PhpClass<cr>", { silent = true })
-keymap('n', "<leader>ps", "<cmd>PhpScripts<cr>", { silent = true })
-keymap('n', "<leader>pn", "<cmd>PhpNamespace<cr>", { silent = true })
-keymap('n', "<leader>pg", "<cmd>PhpGetSet<cr>", { silent = true })
-keymap('n', "<leader>pf", "<cmd>PhpCreate<cr>", { silent = true })
-
--- namespace
-keymap('n', "<leader>lc", '<cmd>lua require("namespace.getClass").get()<cr>', { silent = true })
-keymap('n', "<leader>ln", '<cmd>lua require("namespace.namespace").gen()<cr>', { silent = true })
-
--- laravel nvim
-keymap('n', "<leader>lm", ":Laravel related<cr>", { silent = true })
-keymap('n', "<leader>lr", ":Laravel routes<cr>", { silent = true })
-keymap('n', "<leader>la", ":Laravel artisan<cr>", { silent = true })
-
--- larago
-keymap('n', "<leader>gv", "<cmd>GoBlade<cr>", { silent = true })

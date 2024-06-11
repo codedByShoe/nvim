@@ -7,11 +7,13 @@ return {
     "nvimtools/none-ls.nvim",
   },
   cmd = { "Sail", "Artisan", "Composer", "Npm", "Yarn", "Laravel" },
-  keys = {
-    { "<leader>la", ":Laravel artisan<cr>" },
-    { "<leader>lr", ":Laravel routes<cr>" },
-    { "<leader>lm", ":Laravel related<cr>" },
-  },
   event = { "VeryLazy" },
-  opts = {},
+  config = function()
+    require("laravel").setup()
+    local keymap = vim.keymap.set
+    -- laravel nvim
+    keymap('n', "<leader>lm", ":Laravel related<cr>", { silent = true })
+    keymap('n', "<leader>lr", ":Laravel routes<cr>", { silent = true })
+    keymap('n', "<leader>la", ":Laravel artisan<cr>", { silent = true })
+  end
 }

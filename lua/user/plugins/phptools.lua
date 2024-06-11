@@ -3,7 +3,18 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim"
   },
-  opts = {
-    ui = false,   -- if you have stevearc/dressing.nvim or something similar keep it false or else true
-  }
+  config = function()
+    require("phptools").setup({
+      ui = true
+    })
+
+    local keymap = vim.keymap.set
+    -- phptools
+    keymap('n', '<leader>pm', "<cmd>PhpMethod<cr>", { silent = true })
+    keymap('n', "<leader>pc", "<cmd>PhpClass<cr>", { silent = true })
+    keymap('n', "<leader>ps", "<cmd>PhpScripts<cr>", { silent = true })
+    keymap('n', "<leader>pn", "<cmd>PhpNamespace<cr>", { silent = true })
+    keymap('n', "<leader>pg", "<cmd>PhpGetSet<cr>", { silent = true })
+    keymap('n', "<leader>pf", "<cmd>PhpCreate<cr>", { silent = true })
+  end
 }
