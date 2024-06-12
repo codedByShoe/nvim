@@ -143,6 +143,9 @@ return {
           "templ"
         },
       },
+      marksman = {
+        filetypes = { "markdown", "markdown.mdx" }
+      },
       emmet_ls = {
         filetypes = { 'html', 'ejs', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact', 'blade', "javascriptreact" },
         init_options = {
