@@ -5,6 +5,7 @@ return {
     require('mini.indentscope').setup({
       symbol = "│",
     })
+    require("mini.starter").setup()
 
     require('mini.animate').setup({
       cursor = {
@@ -66,6 +67,7 @@ return {
 
     })
     require('mini.files').setup()
+    require("mini.ai").setup()
 
     -- mini files
     vim.keymap.set('n', '<leader>e', '<cmd>lua MiniFiles.open() <CR>', { silent = true })
