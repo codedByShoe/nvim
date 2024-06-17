@@ -87,6 +87,19 @@ return {
 
     local servers = {
       bashls = {},
+      pyright = {
+        pyright = {
+          autoimportCompletion = true
+        },
+        python = {
+          analysis = {
+            autoSearchPaths = true,
+            diagnosticsMode = 'openFilesOnly',
+            useLibraryCodeForTypes = true,
+            typeCheckingMode = 'off'
+          }
+        }
+      },
       gopls = {
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
