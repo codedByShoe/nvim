@@ -6,12 +6,6 @@ return {
       symbol = "│",
     })
     require("mini.starter").setup()
-
-    require('mini.animate').setup({
-      cursor = {
-        enable = false
-      }
-    })
     require("mini.notify").setup({
       -- Content management
       content = {
@@ -66,11 +60,9 @@ return {
       },
 
     })
-    require('mini.files').setup()
     require("mini.ai").setup()
 
     -- mini files
-    vim.keymap.set('n', '<leader>e', '<cmd>lua MiniFiles.open() <CR>', { silent = true })
     vim.keymap.set("n", "<leader>ge", "<cmd>GoIfErr<CR>", { silent = true })
   end,
 }

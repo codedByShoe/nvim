@@ -88,15 +88,13 @@ return {
     local servers = {
       bashls = {},
       pyright = {
-        pyright = {
-          autoimportCompletion = true
-        },
-        python = {
-          analysis = {
-            autoSearchPaths = true,
-            diagnosticsMode = 'openFilesOnly',
-            useLibraryCodeForTypes = true,
-            typeCheckingMode = 'off'
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              diagnosticMode = "openFilesOnly",
+              useLibraryCodeForTypes = true
+            }
           }
         }
       },
@@ -126,7 +124,7 @@ return {
             indentInnerHtml = true
           },
         },
-        filetypes = { 'html', 'tmpl', 'hbs', 'gohtml', 'templ', 'ejs' }
+        filetypes = { 'html', 'tmpl', 'hbs', 'gohtml', 'templ', 'htmldjango' }
       },
       jsonls = {},
       intelephense = {
@@ -160,7 +158,7 @@ return {
         filetypes = { "markdown", "markdown.mdx" }
       },
       emmet_ls = {
-        filetypes = { 'html', 'ejs', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact', 'blade', "javascriptreact" },
+        filetypes = { 'html', 'htmldjango', 'twig', 'hbs', 'gohtml', 'templ', 'typescriptreact', 'blade', "javascriptreact" },
         init_options = {
           html = {
             options = {
@@ -209,8 +207,6 @@ return {
       -- Capabilities is specific to my setup.
       capabilities = capabilities
     }
-
-
     -- setup default configs
     mason_lspconfig.setup_handlers {
       function(server_name)

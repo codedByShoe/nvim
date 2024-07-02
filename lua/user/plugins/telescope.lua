@@ -22,7 +22,7 @@ return {
         prompt_prefix = " ",
         selection_caret = " ",
         path_display = { "smart" },
-        file_ignore_patterns = { "node_modules", "vendor" },
+        file_ignore_patterns = { "node_modules", "vendor", "__pycache__" },
         mappings = {
           i = {
             ['<C-u>'] = false,

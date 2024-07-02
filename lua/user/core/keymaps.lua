@@ -36,3 +36,11 @@ keymap("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 
 -- kill current buffer
 keymap("n", "<leader>c", ":bd!<CR>", { silent = true })
+
+-- Floaterm
+keymap("n", "<C-t>", "<CMD>FloatermToggle<CR>", { silent = true })
+keymap("t", "<C-t>", "<CMD>FloatermToggle<CR>", { silent = true })
+keymap("t", "<C-n>", "<CMD>FloatermNext<CR>", { silent = true })
+keymap("t", "<C-w>", "<CMD>FloatermNew<CR>", { silent = true })
+keymap("t", "<C-p>", "<CMD>FloatermPrev<CR>", { silent = true })
+keymap("t", "<C-q>", "<CMD>FloatermKill<CR>", { silent = true })
