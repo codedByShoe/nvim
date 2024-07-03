@@ -18,10 +18,10 @@ keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- " buffer switching
-keymap('n', '<C-h>', '<C-w>h', { silent = true })
-keymap('n', '<C-l>', '<C-w>l', { silent = true })
-keymap('n', '<C-j>', '<C-w>j', { silent = true })
-keymap('n', '<C-k>', '<C-w>k', { silent = true })
+keymap('n', '<leader>bh', '<C-w>h', { silent = true, desc = 'Switch Buffer Left' })
+keymap('n', '<leader>bl', '<C-w>l', { silent = true, desc = 'Switch Buffer Right' })
+keymap('n', '<leader>bj', '<C-w>j', { silent = true, desc = 'Switch Buffer Up' })
+keymap('n', '<leader>bk', '<C-w>k', { silent = true, desc = 'Switch Buffer Down' })
 
 -- Maintain the cursor position when yanking a visual selection.
 keymap('v', 'y', 'myy`y')
@@ -31,16 +31,21 @@ keymap('v', 'Y', 'myY`y')
 keymap('v', 'p', '"_dP')
 
 -- Navigate buffers
-keymap("n", "<Tab>", ":bnext<CR>", { silent = true })
-keymap("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
+keymap("n", "<leader>bn", ":bnext<CR>", { silent = true, desc = 'Switch Buffer Next' })
+keymap("n", "<leader>bp", ":bprevious<CR>", { silent = true, desc = 'Switch Buffer Previous' })
 
 -- kill current buffer
-keymap("n", "<leader>c", ":bd!<CR>", { silent = true })
+keymap("n", "<leader>bd", ":bd!<CR>", { silent = true, desc = 'Buffer Delete' })
 
 -- Floaterm
-keymap("n", "<C-t>", "<CMD>FloatermToggle<CR>", { silent = true })
-keymap("t", "<C-t>", "<CMD>FloatermToggle<CR>", { silent = true })
+keymap("n", "<leader>tt", "<CMD>FloatermToggle<CR>", { silent = true, desc = 'Toggle Floaterm' })
+keymap("t", "<Esc>", "<CMD>FloatermToggle<CR>", { silent = true })
 keymap("t", "<C-n>", "<CMD>FloatermNext<CR>", { silent = true })
-keymap("t", "<C-w>", "<CMD>FloatermNew<CR>", { silent = true })
 keymap("t", "<C-p>", "<CMD>FloatermPrev<CR>", { silent = true })
 keymap("t", "<C-q>", "<CMD>FloatermKill<CR>", { silent = true })
+
+-- Go If Err
+vim.keymap.set("n", "<leader>ee", "<cmd>GoIfErr<CR>", { silent = true })
+
+-- Neotree
+keymap("n", "<leader>te", "<CMD>Neotree reveal toggle<CR>", { silent = true, desc = 'Toggle Explorer' })

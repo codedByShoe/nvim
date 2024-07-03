@@ -1,19 +1,22 @@
 return {
   -- Autocompletion
   'hrsh7th/nvim-cmp',
+  lazy = false,
+  priority = 100,
   dependencies = {
-    'L3MON4D3/LuaSnip',
+    { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'onsails/lspkind.nvim',
     'hrsh7th/cmp-path',
-    'rafamadriz/friendly-snippets',
+    'hrsh7th/cmp-buffer',
   },
-  config = function(_, opts)
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
-    local icons = require("user.core.icons")
-    require('luasnip.loaders.from_vscode').lazy_load()
+  config = function()
+    require('user.core.snippets')
+    local cmp = require('cmp')
+    local luasnip = require('luasnip')
+    local lspkind = require('lspkind')
+    lspkind.init {}
     luasnip.config.setup {}
     cmp.setup({
       snippet = {
@@ -29,19 +32,6 @@ return {
           scrollbar = true,
         }
       },
-      formatting = {
-        format = function(entry, vim_item)
-          if vim.tbl_contains({ 'path' }, entry.source.name) then
-            local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-            if icon then
-              vim_item.kind = icon
-              vim_item.kind_hl_group = hl_group
-              return vim_item
-            end
-          end
-          return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
-        end
-      },
       completion = {
         completeopt = 'menu,menuone,noinsert',
       },
@@ -50,58 +40,23 @@ return {
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
         ['<C-Space>'] = cmp.mapping.complete {},
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
       },
       sources = {
         { name = 'nvim_lsp' },
-        { name = 'luasnip' },
+        { name = "cody" },
         { name = 'path' },
+        { name = 'buffer' },
       },
     })
-    -- `/` cmdline setup.
-    cmp.setup.cmdline('/', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        { name = 'buffer' }
-      }
-    })
 
-    -- `:` cmdline setup.
-    cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-          { name = 'path' }
-        },
-        {
-          {
-            name = 'cmdline',
-            option = {
-              ignore_cmds = { 'Man', '!' }
-            }
-          }
-        })
+    -- Setup up vim-dadbod
+    cmp.setup.filetype({ "sql" }, {
+      sources = {
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
+      },
     })
   end
 }

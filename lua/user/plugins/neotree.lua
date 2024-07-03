@@ -1,9 +1,6 @@
 return {
   'nvim-neo-tree/neo-tree.nvim',
   cmd = 'Neotree',
-  keys = {
-    { '<leader>e', ':Neotree reveal toggle<CR>' },
-  },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -33,7 +30,7 @@ return {
       "document_symbols",
     },
     source_selector = {
-      winbar = true,
+      winbar = false,
       statusline = false,
       show_separator_on_edge = true,
       highlight_tab = "SidebarTabInactive",
@@ -65,9 +62,9 @@ return {
           ".git",
         },
       },
-      -- follow_current_file = {
-      --   enabled = true,
-      -- },
+      follow_current_file = {
+        enabled = true,
+      },
       group_empty_dirs = false
     },
   },
