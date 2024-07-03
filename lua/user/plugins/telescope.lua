@@ -39,8 +39,8 @@ return {
     pcall(require("telescope").load_extension('harpoon'), 'harpoon')
 
     local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = 'Show History' })
-    vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = 'Show Open Buffers' })
+    vim.keymap.set('n', '<leader>sh', builtin.oldfiles, { desc = 'Show History' })
+    vim.keymap.set('n', '<leader>so', builtin.buffers, { desc = 'Show Open Buffers' })
     vim.keymap.set('n', '<leader>sb', function()
       -- You can pass additional configuration to telescope to change theme, layout, etc.
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -62,7 +62,7 @@ return {
     end, { desc = 'Live Grep Open Files' })
     vim.keymap.set('n', '<leader>sg', builtin.git_files, { desc = 'Search Git Files' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'Search Files' })
-    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
+    vim.keymap.set('n', '<leader>s?', builtin.help_tags, { desc = 'Search Help' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search Workspace' })
     vim.keymap.set('n', '<leader>sl', builtin.live_grep, { desc = 'Search Live Grep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
