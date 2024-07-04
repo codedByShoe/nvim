@@ -19,6 +19,7 @@ return {
     { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local icons = require("user.core.icons")
     require('telescope').setup {
       extensions = {
         ['ui-select'] = {
@@ -26,8 +27,8 @@ return {
         },
       },
       defaults = {
-        prompt_prefix = " ",
-        selection_caret = " ",
+        prompt_prefix = icons.ui.Telescope,
+        selection_caret = icons.ui.Select,
         path_display = { "smart" },
         file_ignore_patterns = { "node_modules", "vendor", "__pycache__" },
       },

@@ -1,6 +1,16 @@
 return {
-  'nvim-lualine/lualine.nvim',
-  config = function()
+  "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
+  opts = function()
+    local utils = require("user.core.utils")
+    local icons = require("user.core.icons")
+    local copilot_colors = {
+      [""] = utils.get_hlgroup("Comment"),
+      ["Normal"] = utils.get_hlgroup("Comment"),
+      ["Warning"] = utils.get_hlgroup("DiagnosticError"),
+      ["InProgress"] = utils.get_hlgroup("DiagnosticWarn"),
+    }
+    -- custom theme
     local theme = function()
       local colors = {
         darkgray = "#16161d",
@@ -47,15 +57,97 @@ return {
         },
       }
     end
-    require('lualine').setup({
+
+
+    return {
       options = {
-        icons_enabled = true,
+        component_separators = { left = " ", right = " " },
+        section_separators = { left = " ", right = " " },
         theme = theme,
-        component_separators = '',
-        -- component_separators = '|',
-        -- section_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        globalstatus = true,
+        disabled_filetypes = { statusline = { "dashboard", "alpha" } },
       },
-    })
-  end
+      sections = {
+        lualine_a = { { "mode", icon = "" } },
+        lualine_b = { { "branch", icon = icons.git.Branch } },
+        lualine_c = {
+          {
+            "diagnostics",
+            symbols = {
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warning,
+              info = icons.diagnostics.Information,
+              hint = icons.diagnostics.Hint,
+            },
+          },
+          { "filetype", icon_only = true,                 separator = "", padding = { left = 1, right = 0 } },
+          { "filename", padding = { left = 1, right = 0 } },
+          {
+            function()
+              local buffer_count = require("user.core.utils").get_buffer_count()
+
+              return "+" .. buffer_count - 1 .. icons.ui.Files
+            end,
+            cond = function()
+              return require("user.core.utils").get_buffer_count() > 1
+            end,
+            color = utils.get_hlgroup("Operator", nil),
+            padding = { left = 0, right = 1 },
+          },
+          {
+            function()
+              return require("nvim-navic").get_location()
+            end,
+            cond = function()
+              return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+            end,
+            color = utils.get_hlgroup("Comment", nil),
+          },
+        },
+        lualine_x = {
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = utils.get_hlgroup("String"),
+          },
+          {
+            function()
+              local icon = icons.git.Octoface
+              local status = require("copilot.api").status.data
+              return icon .. (status.message or "")
+            end,
+            cond = function()
+              local ok, clients = pcall(vim.lsp.get_clients, { name = "copilot", bufnr = 0 })
+              return ok and #clients > 0
+            end,
+            color = function()
+              if not package.loaded["copilot"] then
+                return
+              end
+              local status = require("copilot.api").status.data
+              return copilot_colors[status.status] or copilot_colors[""]
+            end,
+          },
+          { "diff" },
+        },
+        lualine_y = {
+          {
+            "progress",
+          },
+          {
+            "location",
+            color = utils.get_hlgroup("Boolean"),
+          },
+        },
+        lualine_z = {
+          {
+            "datetime",
+            style = icons.ui.Clock .. " %X",
+          },
+        },
+      },
+
+      extensions = { "lazy", "toggleterm", "mason", "neo-tree", "trouble" },
+    }
+  end,
 }
