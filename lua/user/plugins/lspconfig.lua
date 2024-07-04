@@ -24,19 +24,13 @@ return {
       nmap('gd', builtin.lsp_definitions, 'Goto Definition')
       nmap('gr', builtin.lsp_references, 'Goto References')
       nmap('gI', builtin.lsp_implementations, 'Goto Implementation')
-      nmap('<leader>D', builtin.lsp_type_definitions, 'Type Definition')
-      nmap('<leader>ds', builtin.lsp_document_symbols, 'Document Symbols')
-      nmap('<leader>ws', builtin.lsp_dynamic_workspace_symbols, 'Workspace Symbols')
+      nmap('<leader>lD', builtin.lsp_type_definitions, 'Type Definition')
+      nmap('<leader>ls', builtin.lsp_document_symbols, 'Document Symbols')
 
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 
       -- Lesser used LSP functionality
       nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
-      nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, 'Workspace Add Folder')
-      nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Workspace Remove Folder')
-      nmap('<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end, 'Workspace List Folders')
       if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
         nmap('<leader>th', function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 }, { bufnr = 0 })

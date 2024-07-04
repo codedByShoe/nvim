@@ -2,9 +2,6 @@ return {
   'echasnovski/mini.nvim',
   config = function()
     require('mini.surround').setup()
-    require('mini.indentscope').setup({
-      symbol = "│",
-    })
     require('mini.jump').setup()
     require('mini.pairs').setup()
     require('mini.cursorword').setup()
