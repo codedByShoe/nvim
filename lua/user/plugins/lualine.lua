@@ -74,9 +74,9 @@ return {
           {
             "diagnostics",
             symbols = {
-              error = icons.diagnostics.Error,
-              warn = icons.diagnostics.Warning,
-              info = icons.diagnostics.Information,
+              error = icons.diagnostics.Error .. " ",
+              warn = icons.diagnostics.Warning .. " ",
+              info = icons.diagnostics.Information .. " ",
               hint = icons.diagnostics.Hint,
             },
           },
@@ -86,7 +86,7 @@ return {
             function()
               local buffer_count = require("user.core.utils").get_buffer_count()
 
-              return "+" .. buffer_count - 1 .. icons.ui.Files
+              return " +" .. buffer_count - 1 .. " " .. icons.ui.Files
             end,
             cond = function()
               return require("user.core.utils").get_buffer_count() > 1
@@ -112,7 +112,7 @@ return {
           },
           {
             function()
-              local icon = icons.git.Octoface
+              local icon = " " .. icons.git.Octoface
               local status = require("copilot.api").status.data
               return icon .. (status.message or "")
             end,

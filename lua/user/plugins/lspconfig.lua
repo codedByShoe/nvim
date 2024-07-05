@@ -181,6 +181,7 @@ return {
     -- configure blade lsp
     local lspconfig = require("lspconfig")
     local configs = require("lspconfig.configs")
+    local util = require("lspconfig.util")
 
     configs.blade = {
       default_config = {
@@ -188,7 +189,6 @@ return {
         cmd = { vim.fn.expand("$HOME/laravel-dev-tools/builds/laravel-dev-tools"), "lsp" },
         filetypes = { 'blade' },
         root_dir = function(pattern)
-          local util = require("lspconfig.util")
           local cwd = vim.loop.cwd()
           local root = util.root_pattern("composer.json", ".git", ".phpactor.json", ".phpactor.yml")(pattern)
 
@@ -203,6 +203,24 @@ return {
       -- Capabilities is specific to my setup.
       capabilities = capabilities
     }
+
+    -- configure qml
+    configs.qmlls = {
+      default_config = {
+        cmd = { "qmlls" },
+        filetypes = { "qml" },
+        root_dir = function(pattern)
+          local cwd = vim.loop.cwd()
+          local root = util.root_pattern(".venv", ".git")(pattern)
+
+          -- prefer cwd if root is a descendant
+          return util.path.is_descendant(cwd, root) and cwd or root
+        end,
+        settings = {}
+      }
+    }
+
+    lspconfig.qmlls.setup {}
     -- setup default configs
     mason_lspconfig.setup_handlers {
       function(server_name)
