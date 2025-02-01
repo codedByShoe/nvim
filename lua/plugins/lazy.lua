@@ -11,7 +11,12 @@ return {
     "folke/noice.nvim",
     enabled = false,
   },
-  -- Configure LazyVim to load gruvbox
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
+  },
+
   {
     "LazyVim/LazyVim",
     opts = {
@@ -34,5 +39,4 @@ return {
   { import = "lazyvim.plugins.extras.dap.nlua" },
   { import = "lazyvim.plugins.extras.util.rest" },
   { import = "lazyvim.plugins.extras.util.rest" },
-  { import = "lazyvim.plugins.extras.ai.codeium" },
 }

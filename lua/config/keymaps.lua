@@ -36,3 +36,5 @@ vim.keymap.set(
   "<CMD> Telescope diagnostics initial_mode=normal<CR>",
   { desc = "Search Diagnostics" }
 )
+
+vim.keymap.set("n", "<leader>te", "<CMD>lua Snacks.picker.explorer()<CR>", { desc = "Toggle Explorer" })
