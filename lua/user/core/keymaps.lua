@@ -24,23 +24,14 @@ vim.keymap.set('v', 'Y', 'myY`y')
 -- Paste replace visual selection without copying it.
 vim.keymap.set('v', 'p', '"_dP')
 
--- Open lazygit in terminal
-vim.keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { silent = true })
 
 -- TODO comment
 vim.keymap.set('n', '<leader>st', ':TODOQuickfixList<CR>', { silent = true })
 
--- NvimTree Toggle
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { silent = true })
 
 -- Navigate buffers
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true })
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
-
--- Comment
-vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { silent = true })
-vim.keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-  { silent = true })
 
 -- [[COC keymaps]]
 -- Use Tab for trigger completion with characters ahead and navigate
@@ -139,20 +130,4 @@ vim.keymap.set("n", "<space>j", ":<C-u>CocNext<cr>", { silent = true, nowait = t
 vim.keymap.set("n", "<space>k", ":<C-u>CocPrev<cr>", { silent = true, nowait = true })
 -- Resume latest coc list
 vim.keymap.set("n", "<space>p", ":<C-u>CocListResume<cr>", { silent = true, nowait = true })
--- [[ Telescope keymaps ]]
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>b', function()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-
 
