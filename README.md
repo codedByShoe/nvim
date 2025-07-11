@@ -1,1 +1,1 @@
-# Starter Neovim config based from kickstart.nvim
+# Starter Neovim config
