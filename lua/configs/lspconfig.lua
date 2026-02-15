@@ -5,7 +5,20 @@ vim.filetype.add { extension = { templ = "templ" } }
 local servers = {
   html = {},
   intelephense = {},
-  svelte = {},
+  svelte = {
+    settings = {
+      typescript = {
+        inlayHints = {
+          parameterNames = { enabled = "all" },
+          parameterTypes = { enabled = true },
+          variableTypes = { enabled = true },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = true },
+          enumMemberValues = { enabled = true },
+        },
+      },
+    },
+  },
   vtsls = {
     settings = {
       typescript = {
